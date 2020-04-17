@@ -5,15 +5,21 @@ import (
 	"strconv"
 )
 
+type Item struct {
+	id   int
+	name string
+}
+
 type ProbabilityCalculator struct {
 	denominator int
 	rarities    []Rarity
 }
 
 type Rarity struct {
-	id   int
-	name string
-	rate int // 万分率
+	id    int
+	name  string
+	rate  int // 万分率
+	items []Item
 }
 
 func main() {
@@ -35,10 +41,32 @@ func main() {
 }
 
 func GetRarities() []Rarity {
+	items := []Item{
+		{1, "きれいな石ころ"},
+		{2, "イイカンジの枝"},
+		{3, "ドライバー"},
+		{4, "ネジ"},
+		{5, "泥水"},
+		{6, "真水"},
+		{7, "付箋"},
+		{8, "定規"},
+		{9, "土"},
+		{10, "草"},
+		{11, "イケてるTシャツ"},
+		{12, "ビール缶6本セット"},
+		{13, "チョコレートアソート"},
+		{14, "スタバカード"},
+		{15, "医療用マスク詰め合わせ"},
+		{16, "ちょっといいぬいぐるみ"},
+		{17, "1000円分の商品券"},
+		{18, "金の延べ棒"},
+		{19, "ダイヤの指輪"},
+		{20, "ディズニーペアチケット"},
+	}
 	return []Rarity{
-		{1, "R", 6000},
-		{2, "SR", 3500},
-		{3, "UR", 500},
+		{1, "R", 6000, items[0:10]},
+		{2, "SR", 3500, items[10:17]},
+		{3, "UR", 500, items[17:20]},
 	}
 }
 
