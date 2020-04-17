@@ -1,6 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
+
+type ProbabilityCalculator struct {
+	denominator int
+	rarities    []Rarity
+}
 
 type Rarity struct {
 	id   int
@@ -25,4 +33,16 @@ func GetRarities() []Rarity {
 		{2, "SR", 3500},
 		{3, "UR", 500},
 	}
+}
+
+func GetProbabilityCalculator(rarities []Rarity) ProbabilityCalculator {
+	denominator := 0
+	for _, r := range rarities {
+		denominator += r.rate
+	}
+	return ProbabilityCalculator{denominator, rarities}
+}
+
+func (calculator ProbabilityCalculator) GetRate(rarity Rarity) string {
+	return strconv.FormatFloat(float64(rarity.rate)/float64(calculator.denominator)*100.0, 'f', 4, 64)
 }
