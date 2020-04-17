@@ -18,7 +18,14 @@ type Rarity struct {
 
 func main() {
 	fmt.Printf("[Information]\n")
-	fmt.Printf("Rarity & Rate:\n")
+	rarities := GetRarities()
+	calculator := GetProbabilityCalculator(rarities)
+	fmt.Printf("Rarity & Rate(%%):\n")
+	for _, r := range rarities {
+		fmt.Printf("%s=%s ", r.name, calculator.GetRate(r))
+	}
+	fmt.Printf("\n")
+
 	fmt.Printf("Rarity & Item:\n")
 	fmt.Printf("[Execute]\n")
 	fmt.Printf("Draw\n")
