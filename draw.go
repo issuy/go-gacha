@@ -33,6 +33,15 @@ func main() {
 	fmt.Printf("\n")
 
 	fmt.Printf("Rarity & Item:\n")
+	for _, r := range rarities {
+		fmt.Printf("%s=[ ", r.name)
+		for _, i := range r.items {
+			fmt.Printf("%s ", i.name)
+		}
+		fmt.Printf("]\n")
+	}
+	fmt.Printf("\n")
+
 	fmt.Printf("[Execute]\n")
 	fmt.Printf("Draw\n")
 	fmt.Printf("[Result]\n")
