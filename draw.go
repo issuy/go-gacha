@@ -57,6 +57,13 @@ func main() {
 	fmt.Printf("Item:---\n")
 }
 
+func GetRand() *rand.Rand {
+	seed, _ := crand.Int(crand.Reader, big.NewInt(math.MaxInt64))
+	rng := rand.New(mt19937.New())
+	rng.Seed(seed.Int64())
+	return rng
+}
+
 func GetRarities() []Rarity {
 	items := []Item{
 		{1, "きれいな石ころ"},
@@ -100,9 +107,7 @@ func (calculator ProbabilityCalculator) GetRate(rarity Rarity) string {
 }
 
 func (calculator ProbabilityCalculator) DrawRarity() Rarity {
-	seed, _ := crand.Int(crand.Reader, big.NewInt(math.MaxInt64))
-	rng := rand.New(mt19937.New())
-	rng.Seed(seed.Int64())
+	rng := GetRand()
 	dart := rng.Int63n(calculator.denominator)
 
 	var result Rarity
