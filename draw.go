@@ -123,3 +123,9 @@ func (calculator ProbabilityCalculator) DrawRarity() Rarity {
 
 	return result
 }
+
+func (rarity Rarity) DrawItem() Item {
+	rng := GetRand()
+	dart := rng.Int63n(int64(len(rarity.items)))
+	return rarity.items[dart]
+}
