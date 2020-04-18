@@ -48,9 +48,12 @@ func main() {
 	fmt.Printf("\n")
 
 	fmt.Printf("[Execute]\n")
-	fmt.Printf("Draw\n")
+	fmt.Printf("Draw...\n")
+	rarityResult := calculator.DrawRarity()
+	fmt.Printf("\n")
+
 	fmt.Printf("[Result]\n")
-	fmt.Printf("Rarity:---\n")
+	fmt.Printf("Rarity:%s\n", rarityResult.name)
 	fmt.Printf("Item:---\n")
 }
 
