@@ -58,6 +58,14 @@ func main() {
 	fmt.Printf("Item:%s\n", itemResult.name)
 }
 
+func GetProbabilityCalculator(rarities []Rarity) ProbabilityCalculator {
+	var denominator int64
+	for _, r := range rarities {
+		denominator += r.rate
+	}
+	return ProbabilityCalculator{denominator, rarities}
+}
+
 func GetRand() *rand.Rand {
 	seed, _ := crand.Int(crand.Reader, big.NewInt(math.MaxInt64))
 	rng := rand.New(mt19937.New())
@@ -93,14 +101,6 @@ func GetRarities() []Rarity {
 		{2, "SR", 3500, items[10:17]},
 		{3, "UR", 500, items[17:20]},
 	}
-}
-
-func GetProbabilityCalculator(rarities []Rarity) ProbabilityCalculator {
-	var denominator int64
-	for _, r := range rarities {
-		denominator += r.rate
-	}
-	return ProbabilityCalculator{denominator, rarities}
 }
 
 func (calculator ProbabilityCalculator) GetRate(rarity Rarity) string {
