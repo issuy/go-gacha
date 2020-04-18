@@ -1,7 +1,12 @@
 package main
 
 import (
+	crand "crypto/rand"
 	"fmt"
+	"github.com/seehuhn/mt19937"
+	"math"
+	"math/big"
+	"math/rand"
 	"strconv"
 )
 
@@ -11,14 +16,14 @@ type Item struct {
 }
 
 type ProbabilityCalculator struct {
-	denominator int
+	denominator int64
 	rarities    []Rarity
 }
 
 type Rarity struct {
 	id    int
 	name  string
-	rate  int // 万分率
+	rate  int64 // 万分率
 	items []Item
 }
 
@@ -80,7 +85,7 @@ func GetRarities() []Rarity {
 }
 
 func GetProbabilityCalculator(rarities []Rarity) ProbabilityCalculator {
-	denominator := 0
+	var denominator int64
 	for _, r := range rarities {
 		denominator += r.rate
 	}
@@ -89,4 +94,24 @@ func GetProbabilityCalculator(rarities []Rarity) ProbabilityCalculator {
 
 func (calculator ProbabilityCalculator) GetRate(rarity Rarity) string {
 	return strconv.FormatFloat(float64(rarity.rate)/float64(calculator.denominator)*100.0, 'f', 4, 64)
+}
+
+func (calculator ProbabilityCalculator) DrawRarity() Rarity {
+	seed, _ := crand.Int(crand.Reader, big.NewInt(math.MaxInt64))
+	rng := rand.New(mt19937.New())
+	rng.Seed(seed.Int64())
+	dart := rng.Int63n(calculator.denominator)
+
+	var result Rarity
+	var board int64
+	for _, r := range calculator.rarities {
+		board += r.rate
+		fmt.Printf("Debug:%s %d %d %d\n", r.name, r.rate, board, dart)
+		if dart < board {
+			result = r
+			break
+		}
+	}
+
+	return result
 }
