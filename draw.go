@@ -50,11 +50,12 @@ func main() {
 	fmt.Printf("[Execute]\n")
 	fmt.Printf("Draw...\n")
 	rarityResult := calculator.DrawRarity()
+	itemResult := rarityResult.DrawItem()
 	fmt.Printf("\n")
 
 	fmt.Printf("[Result]\n")
 	fmt.Printf("Rarity:%s\n", rarityResult.name)
-	fmt.Printf("Item:---\n")
+	fmt.Printf("Item:%s\n", itemResult.name)
 }
 
 func GetRand() *rand.Rand {
@@ -127,5 +128,6 @@ func (calculator ProbabilityCalculator) DrawRarity() Rarity {
 func (rarity Rarity) DrawItem() Item {
 	rng := GetRand()
 	dart := rng.Int63n(int64(len(rarity.items)))
+	fmt.Printf("Debug:%d\n", dart)
 	return rarity.items[dart]
 }
